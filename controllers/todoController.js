@@ -1,4 +1,7 @@
 data = [{item: "walk dog"}, {item: "eat food"}, {item: "code a little more"}];
+var bodyParser = require('body-parser');
+
+var urlencodedParser = bodyParser.urlencoded({extended: false});
 
 module.exports = function(app){
 
@@ -6,8 +9,9 @@ module.exports = function(app){
     res.render('todo', {todos: data})
   });
 
-  app.post('/todo', function(req, res){
-
+  app.post('/todo', urlencodedParser, function(req, res){
+    data.push(req.body);
+    res.json(data);
   });
 
   app.delete('/todo', function(req, res){
